@@ -72,9 +72,6 @@ float TrackingLoop::update(float measurement)
     // Estimate the position from the velocity estimates
     this->pos_estimate += this->vel_estimate * dt;
 
-    // HACK: figure out how to remove this
-    delay(1);
-
     // Get new velocity estimate from PID controller by comparing position estimate to actual position
     this->vel_estimate = this->loop_pid.update(measurement, this->pos_estimate);
 

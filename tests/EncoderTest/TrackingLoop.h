@@ -24,9 +24,9 @@ class TrackingLoop
 
     private:
         // Estimation variables
-        float accel_estimate;
-        float vel_estimate;
-        float pos_estimate;
+        volatile float accel_estimate;
+        volatile float vel_estimate;
+        volatile float pos_estimate;
 
         // PI controller
         PIDController loop_pid; //accel_pid, 
