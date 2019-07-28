@@ -16,25 +16,25 @@ class TrackingLoop
 
         // Modifiers
         void reset();
+        void update(float measurement);
 
         // Accessors
         float get_velocity_estimate();
         float get_accel_estimate();
-        float update(float measurement);
 
     private:
         // Estimation variables
-        volatile float accel_estimate;
-        volatile float vel_estimate;
-        volatile float pos_estimate;
+        float accel_estimate;
+        float vel_estimate;
+        float pos_estimate;
 
         // PI controller
-        PIDController loop_pid; //accel_pid, 
+        PIDController vel_pid, accel_pid;
         float kp;
         float ki;
 
         // Time tracking
-        float last_time;
+        unsigned long last_time;
 };
 
 #endif
