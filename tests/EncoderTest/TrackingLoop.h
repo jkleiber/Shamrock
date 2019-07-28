@@ -12,22 +12,24 @@ class TrackingLoop
         TrackingLoop(float kp, float ki);
 
         // Copy-assign
-        void operator=(const TrackingLoop& quad_encoder);
+        void operator=(const TrackingLoop& tracker);
 
         // Modifiers
         void reset();
-        void update(float measurement);
 
         // Accessors
         float get_velocity_estimate();
+        float get_accel_estimate();
+        float update(float measurement);
 
     private:
         // Estimation variables
+        float accel_estimate;
         float vel_estimate;
         float pos_estimate;
 
         // PI controller
-        PIDController loop_pid;
+        PIDController loop_pid; //accel_pid, 
         float kp;
         float ki;
 

@@ -6,7 +6,7 @@ TrackingLoop::TrackingLoop()
     // initialize the PI controller
     this->kp = 40.0;
     this->ki = 900.0;
-    this->loop_pid.initialize(0, this->kp, this->ki, 0);
+    this->loop_pid.begin(0, this->kp, this->ki, 0);
     
     // Unbounded output required on the PID
     this->loop_pid.set_bounded(false);
@@ -22,7 +22,7 @@ TrackingLoop::TrackingLoop(float kp, float ki)
     // initialize the PI controller
     this->kp = kp;
     this->ki = ki;
-    this->loop_pid.initialize(0, this->kp, this->ki, 0);
+    this->loop_pid.begin(0, this->kp, this->ki, 0);
 
     // Unbounded output required on the PID
     this->loop_pid.set_bounded(false);
@@ -52,19 +52,19 @@ void TrackingLoop::reset()
     this->vel_estimate = 0.0;
 
     // Reset the PID
-    this->loop_pid.initialize(0, this->kp, this->ki, 0);
+    this->loop_pid.reset();
+    this->loop_pid.begin(0, this->kp, this->ki, 0);
 
     // reset the time tracking
     this->last_time = millis();
 }
 
 
-void TrackingLoop::update(float measurement)
+float TrackingLoop::update(float measurement)
 {
     // Declare local vars
     float dt;
     float pos_error;
-    float integrator;
 
     // Get the elapsed time (sec)
     dt = (millis() - this->last_time) / 1000.0;
@@ -72,32 +72,16 @@ void TrackingLoop::update(float measurement)
     // Estimate the position from the velocity estimates
     this->pos_estimate += this->vel_estimate * dt;
 
-    // Calculate error
-    pos_error = measurement - this->pos_estimate;
+    // HACK: figure out how to remove this
+    delay(1);
 
-    // Integrate error
-    integrator = this->ki * pos_error * dt;
-
-    // Get PI output
-    this->vel_estimate = integrator + (pos_error * this->kp);
-
-    Serial.print(this->pos_estimate);
-    Serial.print("\t");
-    Serial.print(measurement);
-    Serial.print("\t");
-    Serial.print(pos_error);
-    Serial.print("\t");
-    Serial.print(integrator);
-    Serial.print("\t");
-//
-    //// Get new velocity estimate from PID controller by comparing position estimate to actual position
-    //this->vel_estimate = this->loop_pid.getOutput(measurement, this->pos_estimate);
-    ////this->vel_estimate = this->loop_pid.get_integrator_value();
-//
-    Serial.println(this->vel_estimate);
+    // Get new velocity estimate from PID controller by comparing position estimate to actual position
+    this->vel_estimate = this->loop_pid.update(measurement, this->pos_estimate);
 
     // Set the last time to now
     this->last_time = millis();
+
+    return this->vel_estimate;
 }
 
 

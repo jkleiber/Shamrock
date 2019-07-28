@@ -20,19 +20,21 @@ QuadratureEncoder right_encoder;// 2-7/8" wheel, rotated 3 times, encoder output
 TrackingLoop left_tracking;
 TrackingLoop right_tracking;
 
+float left_vel, right_vel;
+
 
 void tracking_loop()
 {
     // Update the tracking loops
-    left_tracking.update(left_encoder.getValue());
+    left_vel = left_tracking.update(left_encoder.getValue());
     //right_tracking.update(right_encoder.getValue());
 
     // print results to the console
-    /*
-    Serial.print(left_tracking.get_velocity_estimate());
-    Serial.print(" ");
-    Serial.print(right_tracking.get_velocity_estimate());
-    Serial.println();*/
+    
+    Serial.print(left_vel);
+    Serial.println(" ");
+    //Serial.print(left_tracking.get_accel_estimate());
+    //Serial.println();
 }
 
 
