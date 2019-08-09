@@ -42,8 +42,8 @@ void tracking_loop()
     left_tracking.update(left_encoder.getValue());
     //right_tracking.update(right_encoder.getValue());
 
-    left_vel = left_tracking.get_velocity_estimate();
-    left_accel = left_tracking.get_accel_estimate();
+    left_vel = left_tracking.getVelocityEstimate();
+    left_accel = left_tracking.getAccelEstimate();
 
     // print results to the console
     Serial.print(left_encoder.getValue());
