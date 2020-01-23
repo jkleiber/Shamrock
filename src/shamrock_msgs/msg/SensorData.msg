@@ -1,4 +1,0 @@
-float32 velocity
-float32 acceleration
-float32 gyroscope
-float32 magnetometer
