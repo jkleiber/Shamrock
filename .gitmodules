@@ -1,3 +1,0 @@
-[submodule "deps/RobotLib"]
-	path = deps/RobotLib
-	url = https://github.com/jkleiber/RobotLib.git
