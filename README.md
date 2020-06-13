@@ -8,3 +8,4 @@ Hardware development for a six wheel mobile robot
   * Full 3D CAD model of the robot using Autodesk Inventor
   
 ### Pictures
+![Robot assembled in real life](https://github.com/jkleiber/six-wheel-robot/tree/master/pictures/robot-build.jpg)
